@@ -4,27 +4,25 @@ from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QAction
 
 class AbstractAppManager(object):
     def __init__(self):
-        pass
+        self._app = QApplication([])
+        self._tray_icon = QSystemTrayIcon(QtGui.QIcon("tray_icon.png"), self._app)
+        self._menu = QMenu()
+        self._tray_icon.setContextMenu(self.menu)
 
-    def create_app(self):
-        app = QApplication([])
+    @property
+    def app(self):
+        return self._app
 
-        tray_icon = QSystemTrayIcon(QtGui.QIcon("tray_icon.png"), app)
+    @property
+    def tray_icon(self):
+        return self._tray_icon
 
-        exit_action = QAction()
-        exit_action.setText("Exit")
-        exit_action.setShortcut('Ctrl+Q')
-        exit_action.setStatusTip('Exit application')
-        exit_action.triggered.connect(app.quit)
+    @property
+    def menu(self):
+        return self._menu
 
-        menu = QMenu()
-        menu.addAction(exit_action)
-        tray_icon.setContextMenu(menu)
-
-        tray_icon.show()
-        app.exec_()
-
-        return app
+    def add_action_to_menu(self, action):
+        self._menu.addAction(action)
 
     def init_dirs(self):
         raise NotImplementedError("Override this method please")
