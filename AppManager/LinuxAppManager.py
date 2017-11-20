@@ -5,7 +5,6 @@ import os
 class LinuxAppManager(AbstractAppManager):
     def __init__(self):
         super(LinuxAppManager, self).__init__()
-        pass
 
     def init_dirs(self):
         if not os.path.exists(os.path.expanduser('~/.wallpaper-rotator-plus')):
@@ -13,3 +12,6 @@ class LinuxAppManager(AbstractAppManager):
 
         if not os.path.exists(os.path.expanduser('~/.wallpaper-rotator-plus/wallpapers')):
             os.mkdir(os.path.expanduser('~/.wallpaper-rotator-plus/wallpapers'))
+
+    def get_wallpaper_dir(self):
+        return os.path.expanduser('~/.wallpaper-rotator-plus/wallpapers')
