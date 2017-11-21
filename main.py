@@ -1,5 +1,6 @@
 import actions
 from app import Factory
+import threading
 
 
 def main():
@@ -10,7 +11,11 @@ def main():
     app_manager.add_action_to_menu(about_action)
     app_manager.add_action_to_menu(exit_action)
 
-    app_manager.download_picture()
+    if not app_manager.source.is_current_image_exists():
+        t = threading.Thread(target=app_manager.update_wallpaper)
+        t.start()
+    else:
+        app_manager.change_wallpaper()
 
     app_manager.init_dirs()
     app_manager.tray_icon.show()

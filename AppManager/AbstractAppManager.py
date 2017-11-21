@@ -48,6 +48,13 @@ class AbstractAppManager(object):
         url = self.source.get_image_url()
         self.source.download_picture(url)
 
+    def update_wallpaper(self):
+        self.download_picture()
+        self.change_wallpaper()
+
+    def change_wallpaper(self):
+        raise NotImplementedError("Override this method please")
+
     def init_dirs(self):
         raise NotImplementedError("Override this method please")
 

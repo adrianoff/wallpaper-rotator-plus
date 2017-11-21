@@ -21,5 +21,17 @@ class AbstractSource(object):
             file.write(response.content)
             file.close()
 
+    def get_current_backgroud(self):
+        day_dir_name = datetime.datetime.now().strftime("%Y_%m_%d")
+        day_dir_name_path = self.wallpapers_dir + '/' + day_dir_name
+        wallpaper_file_path = day_dir_name_path + '/original.jpg'
+
+        return wallpaper_file_path
+
     def get_image_url(self):
         raise NotImplementedError("Override this method please")
+
+    def is_current_image_exists(self):
+        file_name = self.get_current_backgroud()
+
+        return os.path.isfile(file_name)
