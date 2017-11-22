@@ -9,7 +9,8 @@ class AbstractAppManager(object):
 
         QApplication.setQuitOnLastWindowClosed(False)
 
-        self._tray_icon = QSystemTrayIcon(QtGui.QIcon("tray_icon.png"), self._app)
+        self._q_icon = QtGui.QIcon("tray_icon.png")
+        self._tray_icon = QSystemTrayIcon(self._q_icon, self._app)
         self._menu = QMenu()
         self._tray_icon.setContextMenu(self.menu)
 
@@ -48,13 +49,17 @@ class AbstractAppManager(object):
         try:
             url = self.source.get_image_url()
             self.source.download_picture(url)
+
+            return True
         except Exception:
-            self.tray_icon.showMessage('Error', 'Can not download source picture.')
+            self.tray_icon.showMessage('Error', 'Can not download source picture.', self._q_icon)
+
+            return False
 
     def update_wallpaper(self):
-        self.download_picture()
-        self.source.resize()
-        self.change_wallpaper()
+        if self.download_picture():
+            self.source.resize()
+            self.change_wallpaper()
 
     def change_wallpaper(self):
         raise NotImplementedError("Override this method please")
