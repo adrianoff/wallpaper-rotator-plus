@@ -23,5 +23,5 @@ class LinuxAppManager(AbstractAppManager):
         return os.path.expanduser('~/.wallpaper-rotator-plus/wallpapers')
 
     def change_wallpaper(self):
-        wallpaper = self.source.get_current_backgroud()
+        wallpaper = self.source.get_current_wallpaper()
         self.wallpaper_changer.change_wallpaper(wallpaper)

@@ -45,11 +45,15 @@ class AbstractAppManager(object):
         self._about_window.show()
 
     def download_picture(self):
-        url = self.source.get_image_url()
-        self.source.download_picture(url)
+        try:
+            url = self.source.get_image_url()
+            self.source.download_picture(url)
+        except Exception:
+            self.tray_icon.showMessage('Error', 'Can not download source picture.')
 
     def update_wallpaper(self):
         self.download_picture()
+        self.source.resize()
         self.change_wallpaper()
 
     def change_wallpaper(self):
