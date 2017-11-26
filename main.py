@@ -1,6 +1,7 @@
 import actions
 from app import Factory
 import threading
+import qrc
 
 
 def main():

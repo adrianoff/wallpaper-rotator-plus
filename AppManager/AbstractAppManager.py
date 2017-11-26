@@ -1,9 +1,7 @@
 from PyQt5 import QtGui
-from PyQt5.QtCore import QFile
-from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QWidget
+from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu
 from PyQt5.QtWidgets import QDesktopWidget
 from PyQt5.uic import loadUi
-
 from Source.YandexFotkiSource import YandexFotkiSource
 
 
@@ -13,12 +11,12 @@ class AbstractAppManager(object):
 
         QApplication.setQuitOnLastWindowClosed(False)
 
-        self._q_icon = QtGui.QIcon("tray_icon.png")
+        self._q_icon = QtGui.QIcon("./Form/image/tray_icon.png")
         self._tray_icon = QSystemTrayIcon(self._q_icon, self._app)
         self._menu = QMenu()
         self._tray_icon.setContextMenu(self.menu)
 
-        about_widget = loadUi("about.ui")
+        about_widget = loadUi("./Form/about.ui")
         self._about_window = about_widget
         self._about_window.setWindowTitle('About Wallpaper Rotator Plus')
         self._about_window.setWindowIcon(self._q_icon)
@@ -26,6 +24,7 @@ class AbstractAppManager(object):
         about_height = 530
         self._about_window.resize(about_width, about_height)
         self._about_window.setFixedSize(about_width, about_height)
+        self._about_window.aboutCloseButton.clicked.connect(self._about_window.hide)
         self._about_window.hide()
 
         center_point = QDesktopWidget().availableGeometry().center()
