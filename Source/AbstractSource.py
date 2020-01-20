@@ -1,11 +1,15 @@
 import datetime
 import os
+from abc import ABC
+from abc import abstractmethod
+
 import requests
 
 from PIL import Image
 import cv2
 
-class AbstractSource(object):
+
+class AbstractSource(ABC):
     def __init__(self, wallpapers_dir):
         self.wallpapers_dir = wallpapers_dir
 
@@ -37,8 +41,9 @@ class AbstractSource(object):
 
         return wallpaper_file_path
 
+    @abstractmethod
     def get_image_url(self):
-        raise NotImplementedError("Override this method please")
+        pass
 
     def is_current_image_exists(self):
         file_name = self.get_current_original()

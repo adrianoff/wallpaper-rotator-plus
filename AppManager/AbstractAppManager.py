@@ -1,3 +1,6 @@
+from abc import ABC
+from abc import abstractmethod
+
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu
 from PyQt5.QtWidgets import QDesktopWidget
@@ -5,7 +8,7 @@ from PyQt5.uic import loadUi
 from Source.YandexFotkiSource import YandexFotkiSource
 
 
-class AbstractAppManager(object):
+class AbstractAppManager(ABC):
     def __init__(self):
         self._app = QApplication([])
 
@@ -75,11 +78,14 @@ class AbstractAppManager(object):
             self.source.resize()
             self.change_wallpaper()
 
+    @abstractmethod
     def change_wallpaper(self):
-        raise NotImplementedError("Override this method please")
+        pass
 
+    @abstractmethod
     def init_dirs(self):
-        raise NotImplementedError("Override this method please")
+        pass
 
+    @abstractmethod
     def get_wallpaper_dir(self):
-        raise NotImplementedError("Override this method please")
+        pass
