@@ -23,5 +23,6 @@ def main():
     app_manager.tray_icon.show()
     app_manager.app.exec_()
 
+
 if __name__ == '__main__':
     main()
