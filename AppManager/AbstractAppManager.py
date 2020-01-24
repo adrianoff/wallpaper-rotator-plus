@@ -9,8 +9,11 @@ from Source.AdrianovProSource import AdrianovProSource
 
 import webbrowser
 
+
 class AbstractAppManager(ABC):
     def __init__(self):
+        self._current_image_info = None
+
         self._app = QApplication([])
 
         QApplication.setQuitOnLastWindowClosed(False)
@@ -65,8 +68,9 @@ class AbstractAppManager(ABC):
 
     def download_picture(self):
         try:
-            url = self.source.get_image_url()
-            self.source.download_picture(url)
+            info = self.source.get_image_info()
+            self.source.download_picture(info['url'])
+            self._current_image_info = info
 
             return True
         except Exception:
@@ -80,7 +84,7 @@ class AbstractAppManager(ABC):
             self.change_wallpaper()
 
     def open_link(self):
-        webbrowser.open('https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0')
+        webbrowser.open(self._current_image_info['info_link'])
 
     @abstractmethod
     def change_wallpaper(self):
