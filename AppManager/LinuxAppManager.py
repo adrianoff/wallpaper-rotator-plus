@@ -6,7 +6,7 @@ import os
 class LinuxAppManager(AbstractAppManager):
     def __init__(self):
         self._wallpaper_changer = LinuxWallpaperChanger()
-        super(LinuxAppManager, self).__init__()
+        super().__init__()
 
     @property
     def wallpaper_changer(self):
