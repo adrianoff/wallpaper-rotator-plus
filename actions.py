@@ -7,7 +7,7 @@ def create_exit_action(app_manager: AbstractAppManager):
     exit_action.setText("Exit")
     exit_action.setShortcut('Ctrl+Q')
     exit_action.setStatusTip('Exit application')
-    exit_action.triggered.connect(app_manager.app.quit)
+    exit_action.triggered.connect(app_manager.ui.app.quit)
 
     return exit_action
 
@@ -31,6 +31,6 @@ def create_next_action(app_manager: AbstractAppManager):
 def create_about_action(app_manager: AbstractAppManager):
     exit_action = QAction()
     exit_action.setText("About")
-    exit_action.triggered.connect(app_manager.show_about_window)
+    exit_action.triggered.connect(app_manager.ui.show_about_window)
 
     return exit_action
