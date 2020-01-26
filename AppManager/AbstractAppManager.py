@@ -1,3 +1,4 @@
+import json
 from abc import ABC
 from abc import abstractmethod
 
@@ -37,9 +38,15 @@ class AbstractAppManager(ABC):
         if self.download_picture():
             self.source.resize()
             self.change_wallpaper()
+            self.save_current_image_info()
 
     def open_link(self):
         webbrowser.open(self._current_image_info['info_link'])
+
+    def save_current_image_info(self):
+        file_path = self.get_dir() + '/current_image_info.json'
+        with open(file_path, "w") as fp:
+            json.dump(self._current_image_info, fp, indent=4)
 
     @abstractmethod
     def change_wallpaper(self):
@@ -51,4 +58,8 @@ class AbstractAppManager(ABC):
 
     @abstractmethod
     def get_wallpaper_dir(self):
+        pass
+
+    @abstractmethod
+    def get_dir(self):
         pass

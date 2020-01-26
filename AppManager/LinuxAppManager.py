@@ -22,6 +22,9 @@ class LinuxAppManager(AbstractAppManager):
     def get_wallpaper_dir(self):
         return os.path.expanduser('~/.wallpaper-rotator-plus/wallpapers')
 
+    def get_dir(self):
+        return os.path.expanduser('~/.wallpaper-rotator-plus')
+
     def change_wallpaper(self):
         wallpaper = self.source.get_current_wallpaper()
         self.wallpaper_changer.change_wallpaper(wallpaper)
