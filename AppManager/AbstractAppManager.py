@@ -13,6 +13,7 @@ class AbstractAppManager(ABC):
         self._current_image_info = None
         self._source = AdrianovProSource(self.get_wallpaper_dir())
         self._ui = UIManager()
+        self.update_current_image_info()
 
     @property
     def ui(self):
@@ -30,7 +31,7 @@ class AbstractAppManager(ABC):
 
             return True
         except Exception:
-            self.ui.show_message('Error', 'Can not download source picture.')
+            self.ui.show_message('Error', "Can't download source picture.")
 
             return False
 
@@ -41,12 +42,27 @@ class AbstractAppManager(ABC):
             self.save_current_image_info()
 
     def open_link(self):
-        webbrowser.open(self._current_image_info['info_link'])
+        self.update_current_image_info()
+        if \
+                self._current_image_info is not None and \
+                isinstance(self._current_image_info, dict) and \
+                'info_link' in self._current_image_info.keys():
+
+            webbrowser.open(self._current_image_info['info_link'])
 
     def save_current_image_info(self):
         file_path = self.get_dir() + '/current_image_info.json'
         with open(file_path, "w") as fp:
-            json.dump(self._current_image_info, fp, indent=4)
+            json.dump(self._current_image_info, fp, indent=4, ensure_ascii=False)
+
+    def update_current_image_info(self):
+        if self._current_image_info is None:
+            file_path = self.get_dir() + '/current_image_info.json'
+            with open(file_path, "r") as fp:
+                data = json.load(fp)
+                keys = data.keys()
+                if 'url' in keys and 'author' in keys and 'title' in keys and 'year' in keys and 'info_link' in keys:
+                    self._current_image_info = data
 
     @abstractmethod
     def change_wallpaper(self):
