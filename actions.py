@@ -7,7 +7,7 @@ def create_exit_action(app_manager: AbstractAppManager):
     exit_action.setText("Exit")
     exit_action.setShortcut('Ctrl+Q')
     exit_action.setStatusTip('Exit application')
-    exit_action.triggered.connect(app_manager.ui.app.quit)
+    exit_action.triggered.connect(app_manager.exit_app)
 
     return exit_action
 
@@ -23,7 +23,7 @@ def create_open_link_action(app_manager: AbstractAppManager):
 def create_next_action(app_manager: AbstractAppManager):
     next_action = QAction()
     next_action.setText("Next")
-    next_action.triggered.connect(app_manager.update_wallpaper)
+    next_action.triggered.connect(app_manager.restart_thread)
 
     return next_action
 

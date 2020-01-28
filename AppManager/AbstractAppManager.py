@@ -3,6 +3,7 @@ from abc import ABC
 from abc import abstractmethod
 
 from Source.AdrianovProSource import AdrianovProSource
+from Threads.UpdateThread import UpdateThread
 from UIManager.UIManager import UIManager
 
 import webbrowser
@@ -10,6 +11,7 @@ import webbrowser
 
 class AbstractAppManager(ABC):
     def __init__(self):
+        self.update_thread = self.create_thread()
         self._current_image_info = None
         self._source = AdrianovProSource(self.get_wallpaper_dir())
         self._ui = UIManager()
@@ -41,6 +43,19 @@ class AbstractAppManager(ABC):
             self.change_wallpaper()
             self.save_current_image_info()
 
+    def create_thread(self):
+        return UpdateThread(self.update_wallpaper, 20)
+
+    def restart_thread(self):
+        if isinstance(self.update_thread, UpdateThread) and self.update_thread.is_alive():
+            self.update_thread.done()
+
+        self.update_thread = self.create_thread()
+        self.update_thread.start()
+
+    def start_thread(self):
+        self.update_thread.start()
+
     def open_link(self):
         self.update_current_image_info()
         if \
@@ -63,6 +78,10 @@ class AbstractAppManager(ABC):
                 keys = data.keys()
                 if 'url' in keys and 'author' in keys and 'title' in keys and 'year' in keys and 'info_link' in keys:
                     self._current_image_info = data
+
+    def exit_app(self):
+        self.update_thread.done()
+        self.ui.app.quit()
 
     @abstractmethod
     def change_wallpaper(self):

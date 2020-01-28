@@ -1,6 +1,5 @@
 import actions
 from app import Factory
-import threading
 import qrc
 
 
@@ -17,17 +16,9 @@ def main():
     app_manager.ui.add_separator_to_menu()
     app_manager.ui.add_action_to_menu(exit_action)
 
-    # if not app_manager.source.is_current_image_exists():
-    #     t = threading.Thread(target=app_manager.update_wallpaper)
-    #     t.start()
-    # else:
-    #     app_manager.change_wallpaper()
-
-    t = threading.Thread(target=app_manager.update_wallpaper)
-    t.start()
-
     app_manager.init_dirs()
     app_manager.ui.tray_icon.show()
+    app_manager.start_thread()
     app_manager.ui.app.exec_()
 
 
