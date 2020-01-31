@@ -17,6 +17,7 @@ def main():
     app_manager.ui.add_action_to_menu(exit_action)
 
     app_manager.init_dirs()
+    app_manager.update_current_image_info()
     app_manager.ui.tray_icon.show()
     app_manager.start_thread()
     app_manager.ui.app.exec_()

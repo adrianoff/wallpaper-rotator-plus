@@ -1,19 +1,31 @@
 from AppManager.AbstractAppManager import AbstractAppManager
+from WallpaperChanger.WindowsWallpaperChanger import WindowsWallpaperChanger
 import os
 
 
 class WindowsAppManager(AbstractAppManager):
     def __init__(self):
+        self._wallpaper_changer = WindowsWallpaperChanger()
         super().__init__()
 
+    @property
+    def wallpaper_changer(self):
+        return self._wallpaper_changer
+
     def init_dirs(self):
+        if not os.path.exists(os.path.expanduser('~\\AppData\\LocalLow\\wallpaper-rotator-plus')):
+            os.mkdir(os.path.expanduser('~\\AppData\\LocalLow\\wallpaper-rotator-plus'))
+
+        if not os.path.exists(os.path.expanduser('~\\AppData\\LocalLow\\wallpaper-rotator-plus\\wallpapers')):
+            os.mkdir(os.path.expanduser('~\\AppData\\LocalLow\\wallpaper-rotator-plus\\wallpapers'))
         pass
 
     def get_wallpaper_dir(self):
-        return os.path.expanduser('~/')
+        return os.path.expanduser('~\\AppData\\LocalLow\\wallpaper-rotator-plus\\wallpapers')
 
     def get_dir(self):
-        return os.path.expanduser('~/')
+        return os.path.expanduser('~\\AppData\\LocalLow\\wallpaper-rotator-plus')
 
     def change_wallpaper(self):
-        pass
+        wallpaper = self.source.get_current_wallpaper()
+        self.wallpaper_changer.change_wallpaper(wallpaper)

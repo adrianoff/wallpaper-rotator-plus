@@ -1,5 +1,9 @@
-class AbstractWallpaperChanger(object):
+from abc import ABC, abstractmethod
 
+
+class AbstractWallpaperChanger(ABC):
+
+    @abstractmethod
     def change_wallpaper(self, background):
-        raise NotImplementedError("Override this method, please")
+        pass
 

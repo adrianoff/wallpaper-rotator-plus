@@ -1,4 +1,5 @@
 import json
+import os
 from abc import ABC
 from abc import abstractmethod
 
@@ -15,7 +16,6 @@ class AbstractAppManager(ABC):
         self._current_image_info = None
         self._source = AdrianovProSource(self.get_wallpaper_dir())
         self._ui = UIManager()
-        self.update_current_image_info()
 
     @property
     def ui(self):
@@ -73,11 +73,12 @@ class AbstractAppManager(ABC):
     def update_current_image_info(self):
         if self._current_image_info is None:
             file_path = self.get_dir() + '/current_image_info.json'
-            with open(file_path, "r") as fp:
-                data = json.load(fp)
-                keys = data.keys()
-                if 'url' in keys and 'author' in keys and 'title' in keys and 'year' in keys and 'info_link' in keys:
-                    self._current_image_info = data
+            if os.path.exists(file_path):
+                with open(file_path, "r") as fp:
+                    data = json.load(fp)
+                    keys = data.keys()
+                    if 'url' in keys and 'author' in keys and 'title' in keys and 'year' in keys and 'info_link' in keys:
+                        self._current_image_info = data
 
     def exit_app(self):
         self.update_thread.done()
