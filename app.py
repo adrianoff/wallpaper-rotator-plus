@@ -1,5 +1,6 @@
 from AppManager.AbstractAppManager import AbstractAppManager
 from AppManager.LinuxAppManager import LinuxAppManager
+from AppManager.MacAppManager import MacAppManager
 from AppManager.WindowsAppManager import WindowsAppManager
 import platform
 
@@ -9,10 +10,13 @@ class Factory(object):
 
     @staticmethod
     def get_app_manager() -> AbstractAppManager:
-        if platform.system() == 'Linux':
+        os_platform = platform.system()
+        if os_platform == 'Linux':
             app_manager = LinuxAppManager()
-        elif platform.system() == 'Windows':
+        elif os_platform == 'Windows':
             app_manager = WindowsAppManager()
+        elif os_platform == 'Darwin':
+            app_manager = MacAppManager()
         else:
             raise NotImplementedError('This platform not supported.')
 
