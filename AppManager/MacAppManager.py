@@ -4,8 +4,8 @@ from WallpaperChanger.MacWallpaperChanger import MacWallpaperChanger
 
 class MacAppManager(LinuxAppManager):
     def __init__(self):
-        self._wallpaper_changer = MacWallpaperChanger()
         super().__init__()
+        self._wallpaper_changer = MacWallpaperChanger()
 
     @property
     def wallpaper_changer(self):
