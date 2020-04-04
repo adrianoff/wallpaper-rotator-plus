@@ -14,8 +14,10 @@ class AbstractAppManager(ABC):
     def __init__(self):
         self.update_thread = self.create_thread()
         self._current_image_info = None
-        self._source = AdrianovProSource(self.get_wallpaper_dir())
         self._ui = UIManager()
+
+        screen_resolution = self._ui.app.desktop().screenGeometry()
+        self._source = AdrianovProSource(self.get_wallpaper_dir(), screen_resolution.width(), screen_resolution.height())
 
     @property
     def ui(self):
@@ -44,7 +46,7 @@ class AbstractAppManager(ABC):
             self.save_current_image_info()
 
     def create_thread(self):
-        return UpdateThread(self.update_wallpaper, 20)
+        return UpdateThread(self.update_wallpaper, 60*60*24)
 
     def restart_thread(self):
         if isinstance(self.update_thread, UpdateThread) and self.update_thread.is_alive():
