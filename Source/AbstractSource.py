@@ -79,6 +79,6 @@ class AbstractSource(ABC):
             draw = ImageDraw.Draw(background)
             font_size = 22
             unicode_font = ImageFont.truetype("../Resources/DejaVuSans.ttf", font_size)
-            draw.text((100, max_height-50), self.painter_name + '. ' + self.picture_name + '.', font=unicode_font)
+            draw.text((100, max_height-120), self.painter_name + '. ' + self.picture_name + '.', font=unicode_font)
 
         background.save(wallpaper_final_file_path, 'JPEG')
