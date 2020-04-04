@@ -1,4 +1,3 @@
-import datetime
 import os
 from abc import ABC
 from abc import abstractmethod
@@ -48,12 +47,15 @@ class AbstractSource(ABC):
         max_width = self.screen_width
         max_height = self.screen_height
 
-        blurred_file_path = self.wallpapers_dir + '/blured.jpg'
+        blurred_file_path = self.wallpapers_dir + '/blurred.jpg'
+        # noinspection PyUnresolvedReferences
         img = cv2.imread(self.get_current_original())
+        # noinspection PyUnresolvedReferences
         dst = cv2.blur(img, (150, 150))
+        # noinspection PyUnresolvedReferences
         cv2.imwrite(blurred_file_path, dst)
 
-        blurred_resized_file_path = self.wallpapers_dir + '/blured_resized.jpg'
+        blurred_resized_file_path = self.wallpapers_dir + '/blurred_resized.jpg'
         blurred_img = Image.open(blurred_file_path)
         blurred_resized_img = blurred_img.resize((max_width, max_height))
         blurred_resized_img.save(blurred_resized_file_path, 'JPEG')
@@ -77,7 +79,7 @@ class AbstractSource(ABC):
 
         if self.picture_name is not None and self.painter_name is not None:
             draw = ImageDraw.Draw(background)
-            font_size = 22
+            font_size = 16
             unicode_font = ImageFont.truetype("../Resources/DejaVuSans.ttf", font_size)
             draw.text((100, max_height-120), self.painter_name + '. ' + self.picture_name + '.', font=unicode_font)
 
