@@ -8,7 +8,8 @@ class AdrianovProSource(AbstractSource):
         super().__init__(wallpapers_dir, screen_width, screen_height)
 
     def get_image_info(self):
-        url = 'http://localhost:8000/api/random/picture'
+        #url = 'http://localhost:8000/api/random/picture'
+        url = 'http://wrp.adrianov.pro/api/random/picture'
         req = requests.get(url, verify=False)
         result = json.loads(req.text)
         result['url'] = 'http://localhost:8000/' + result['file']
