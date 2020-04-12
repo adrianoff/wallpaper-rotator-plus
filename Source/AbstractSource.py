@@ -20,7 +20,7 @@ class AbstractSource(ABC):
         wallpaper_file_path = self.wallpapers_dir + '/original.jpg'
 
         with open(wallpaper_file_path, "wb") as file:
-            response = requests.get(url)
+            response = requests.get(url, timeout=(5, 30))
             file.write(response.content)
             file.close()
 
