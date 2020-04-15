@@ -1,7 +1,10 @@
-from PyQt5 import QtGui
+from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu
 from PyQt5.QtWidgets import QDesktopWidget
 from PyQt5.uic import loadUi
+import qrc
+
+from Form.about import AboutForm
 
 
 class UIManager:
@@ -11,12 +14,17 @@ class UIManager:
 
         QApplication.setQuitOnLastWindowClosed(False)
 
-        self._q_icon = QtGui.QIcon("./Form/image/tray_icon.png")
+        self._q_icon = QtGui.QIcon(":/image/image/tray_icon.png")
         self._tray_icon = QSystemTrayIcon(self._q_icon, self._app)
         self._menu = QMenu()
         self._tray_icon.setContextMenu(self.menu)
 
-        about_widget = loadUi("./Form/about.ui")
+        #about_widget = loadUi("./Form/about.ui")
+
+        about_widget = QtWidgets.QWidget()
+        ui = AboutForm()
+        ui.setupUi(about_widget)
+
         self._about_window = about_widget
         self._about_window.setWindowTitle('About Wallpaper Rotator Plus')
         self._about_window.setWindowIcon(self._q_icon)
