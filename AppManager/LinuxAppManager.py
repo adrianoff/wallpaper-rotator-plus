@@ -28,3 +28,26 @@ class LinuxAppManager(AbstractAppManager):
     def change_wallpaper(self):
         wallpaper = self.source.get_current_wallpaper()
         self.wallpaper_changer.change_wallpaper(wallpaper)
+
+    def run_on_startup_trigger(self):
+        if self.is_run_on_startup():
+            os.remove(os.path.expanduser('~/.config/autostart/artground.desktop'))
+        else:
+            lines = [
+                '[Desktop Entry]',
+                'Type=Application',
+                'Exec="%s"' % self.get_exec_file_path(),
+                'Hidden=false',
+                'NoDisplay=false',
+                'X-GNOME-Autostart-enabled=true',
+                'Name=artground'
+            ]
+            with open(os.path.expanduser('~/.config/autostart/artground.desktop'), "w") as file:
+                file.writelines("%s\n" % line for line in lines)
+                file.close()
+
+    def is_run_on_startup(self):
+        return os.path.exists(os.path.expanduser('~/.config/autostart/artground.desktop'))
+
+    def get_exec_file_path(self):
+        return self.exec_path + '/artground'

@@ -29,3 +29,12 @@ class WindowsAppManager(AbstractAppManager):
     def change_wallpaper(self):
         wallpaper = self.source.get_current_wallpaper()
         self.wallpaper_changer.change_wallpaper(wallpaper)
+
+    def run_on_startup_trigger(self):
+        pass
+
+    def is_run_on_startup(self):
+        pass
+
+    def get_exec_file_path(self):
+        return self.exec_path + '\\artground.exe'

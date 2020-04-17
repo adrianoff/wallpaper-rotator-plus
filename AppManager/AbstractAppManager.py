@@ -14,6 +14,7 @@ class AbstractAppManager(ABC):
     def __init__(self):
         self.update_thread = self.create_thread()
         self._current_image_info = None
+        self.exec_path = None
         self._ui = UIManager()
 
         screen_resolution = self._ui.app.desktop().screenGeometry()
@@ -100,4 +101,16 @@ class AbstractAppManager(ABC):
 
     @abstractmethod
     def get_dir(self):
+        pass
+
+    @abstractmethod
+    def run_on_startup_trigger(self):
+        pass
+
+    @abstractmethod
+    def is_run_on_startup(self):
+        pass
+
+    @abstractmethod
+    def get_exec_file_path(self):
         pass
