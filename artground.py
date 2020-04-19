@@ -4,6 +4,7 @@ import pathlib
 import actions
 from app import Factory
 import qrc
+import pkg_resources.py2_warn
 
 
 def main():
@@ -23,7 +24,7 @@ def main():
     app_manager.ui.add_separator_to_menu()
     app_manager.ui.add_action_to_menu(exit_action)
 
-    app_manager.exec_path = str(pathlib.Path(__file__).parent.absolute())
+    app_manager.exec_path = os.path.dirname(os.path.abspath(__file__))
     app_manager.init_dirs()
     app_manager.update_current_image_info()
     app_manager.ui.tray_icon.show()

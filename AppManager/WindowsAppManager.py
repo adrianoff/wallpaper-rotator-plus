@@ -1,3 +1,6 @@
+import win32com
+import win32com.client
+
 from AppManager.AbstractAppManager import AbstractAppManager
 from WallpaperChanger.WindowsWallpaperChanger import WindowsWallpaperChanger
 import os
@@ -6,6 +9,7 @@ import os
 class WindowsAppManager(AbstractAppManager):
     def __init__(self):
         self._wallpaper_changer = WindowsWallpaperChanger()
+        self._startup_file = os.path.expanduser('~\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\artground.lnk')
         super().__init__()
 
     @property
@@ -31,10 +35,18 @@ class WindowsAppManager(AbstractAppManager):
         self.wallpaper_changer.change_wallpaper(wallpaper)
 
     def run_on_startup_trigger(self):
-        pass
+
+        if os.path.exists(self._startup_file):
+            os.remove(self._startup_file)
+        else:
+            path = self.get_exec_file_path()
+            shell = win32com.client.Dispatch("WScript.Shell")
+            shortcut = shell.CreateShortCut(self._startup_file)
+            shortcut.Targetpath = path
+            shortcut.save()
 
     def is_run_on_startup(self):
-        pass
+        return os.path.exists(self._startup_file)
 
     def get_exec_file_path(self):
         return self.exec_path + '\\artground.exe'

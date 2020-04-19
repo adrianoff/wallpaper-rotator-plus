@@ -1,6 +1,7 @@
 import os
 from abc import ABC
 from abc import abstractmethod
+import pathlib
 
 import requests
 
@@ -77,10 +78,16 @@ class AbstractSource(ABC):
         wallpaper_final_file_path = self.wallpapers_dir + '/wallpaper.jpg'
         background.paste(img, offset)
 
-        if self.picture_name is not None and self.painter_name is not None:
-            draw = ImageDraw.Draw(background)
-            font_size = 16
-            unicode_font = ImageFont.truetype("../Resources/DejaVuSans.ttf", font_size)
-            draw.text((100, max_height-120), self.painter_name + '. ' + self.picture_name + '.', font=unicode_font)
+        try:
+            if self.picture_name is not None and self.painter_name is not None:
+                draw = ImageDraw.Draw(background)
+                font_size = 16
+                #path_to_font = '../Resources/DejaVuSans.ttf'
+                path_to_font = 'arial.ttf'
+                unicode_font = ImageFont.truetype(path_to_font, font_size)
+
+                draw.text((100, max_height-120), self.painter_name + '. ' + self.picture_name + '.', font=unicode_font)
+        except OSError:
+            pass
 
         background.save(wallpaper_final_file_path, 'JPEG')

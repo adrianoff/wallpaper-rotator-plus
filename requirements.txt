@@ -3,3 +3,5 @@ bs4
 requests
 pillow
 opencv-python
+setuptools==45.0.0
+pywin32
