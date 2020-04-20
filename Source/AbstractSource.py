@@ -10,12 +10,13 @@ import cv2
 
 
 class AbstractSource(ABC):
-    def __init__(self, wallpapers_dir, screen_width, screen_height):
+    def __init__(self, wallpapers_dir, screen_width, screen_height, font_path):
         self.wallpapers_dir = wallpapers_dir
         self.screen_height = screen_height
         self.screen_width = screen_width
         self.picture_name = None
         self.painter_name = None
+        self.font_path = font_path
 
     def download_picture(self, url):
         wallpaper_file_path = self.wallpapers_dir + '/original.jpg'
@@ -82,9 +83,7 @@ class AbstractSource(ABC):
             if self.picture_name is not None and self.painter_name is not None:
                 draw = ImageDraw.Draw(background)
                 font_size = 16
-                #path_to_font = '../Resources/DejaVuSans.ttf'
-                path_to_font = 'arial.ttf'
-                unicode_font = ImageFont.truetype(path_to_font, font_size)
+                unicode_font = ImageFont.truetype(self.font_path, font_size)
 
                 draw.text((100, max_height-120), self.painter_name + '. ' + self.picture_name + '.', font=unicode_font)
         except OSError:

@@ -1,5 +1,8 @@
-import win32com
-import win32com.client
+import platform
+
+if platform.system() == 'Windows':
+    import win32com
+    import win32com.client
 
 from AppManager.AbstractAppManager import AbstractAppManager
 from WallpaperChanger.WindowsWallpaperChanger import WindowsWallpaperChanger
@@ -9,7 +12,8 @@ import os
 class WindowsAppManager(AbstractAppManager):
     def __init__(self):
         self._wallpaper_changer = WindowsWallpaperChanger()
-        self._startup_file = os.path.expanduser('~\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\artground.lnk')
+        self._startup_file = os.path.expanduser(
+            '~\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\artground.lnk')
         super().__init__()
 
     @property
@@ -50,3 +54,6 @@ class WindowsAppManager(AbstractAppManager):
 
     def get_exec_file_path(self):
         return self.exec_path + '\\artground.exe'
+
+    def get_font_path(self):
+        return 'arial.ttf'

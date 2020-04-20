@@ -1,10 +1,12 @@
 import os
-import pathlib
+import platform
 
 import actions
 from app import Factory
 import qrc
-import pkg_resources.py2_warn
+
+if platform.system() == 'Windows':
+    import pkg_resources.py2_warn
 
 
 def main():

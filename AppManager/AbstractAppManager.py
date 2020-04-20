@@ -18,7 +18,12 @@ class AbstractAppManager(ABC):
         self._ui = UIManager()
 
         screen_resolution = self._ui.app.desktop().screenGeometry()
-        self._source = AdrianovProSource(self.get_wallpaper_dir(), screen_resolution.width(), screen_resolution.height())
+        self._source = AdrianovProSource(
+            self.get_wallpaper_dir(),
+            screen_resolution.width(),
+            screen_resolution.height(),
+            self.get_font_path()
+        )
 
     @property
     def ui(self):
@@ -113,4 +118,8 @@ class AbstractAppManager(ABC):
 
     @abstractmethod
     def get_exec_file_path(self):
+        pass
+
+    @abstractmethod
+    def get_font_path(self):
         pass

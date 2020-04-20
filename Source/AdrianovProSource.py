@@ -4,8 +4,8 @@ import json
 
 
 class AdrianovProSource(AbstractSource):
-    def __init__(self, wallpapers_dir, screen_width, screen_height):
-        super().__init__(wallpapers_dir, screen_width, screen_height)
+    def __init__(self, wallpapers_dir, screen_width, screen_height, font_path):
+        super().__init__(wallpapers_dir, screen_width, screen_height, font_path)
 
     def get_image_info(self):
         url = 'http://wrp.adrianov.pro/api/random/picture'

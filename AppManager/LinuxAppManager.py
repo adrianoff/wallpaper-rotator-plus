@@ -51,3 +51,6 @@ class LinuxAppManager(AbstractAppManager):
 
     def get_exec_file_path(self):
         return self.exec_path + '/artground'
+
+    def get_font_path(self):
+        return '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
